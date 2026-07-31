@@ -1,0 +1,112 @@
+{
+  "test_iid": {
+    "n": 65,
+    "accuracy": 0.9692307692307692,
+    "macro_precision": 0.9710144927536232,
+    "macro_recall": 0.9770114942528735,
+    "macro_f1": 0.972943722943723,
+    "per_class": {
+      "execute": {
+        "precision": 1.0,
+        "recall": 0.9310344827586207,
+        "f1": 0.9642857142857143,
+        "support": 29
+      },
+      "ask": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 15
+      },
+      "block": {
+        "precision": 0.9130434782608695,
+        "recall": 1.0,
+        "f1": 0.9545454545454546,
+        "support": 21
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "execute",
+        "ask",
+        "block"
+      ],
+      "matrix": [
+        [
+          27,
+          0,
+          2
+        ],
+        [
+          0,
+          15,
+          0
+        ],
+        [
+          0,
+          0,
+          21
+        ]
+      ]
+    },
+    "unsafe_execution_rate": 0.0,
+    "false_intervention_rate": 0.06896551724137931,
+    "autonomy_coverage": 0.4153846153846154,
+    "severity_weighted_error": 0.09230769230769231
+  },
+  "test_ood": {
+    "n": 70,
+    "accuracy": 0.9714285714285714,
+    "macro_precision": 0.9743589743589745,
+    "macro_recall": 0.9743589743589745,
+    "macro_f1": 0.9743589743589745,
+    "per_class": {
+      "execute": {
+        "precision": 0.9615384615384616,
+        "recall": 0.9615384615384616,
+        "f1": 0.9615384615384616,
+        "support": 26
+      },
+      "ask": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 18
+      },
+      "block": {
+        "precision": 0.9615384615384616,
+        "recall": 0.9615384615384616,
+        "f1": 0.9615384615384616,
+        "support": 26
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "execute",
+        "ask",
+        "block"
+      ],
+      "matrix": [
+        [
+          25,
+          0,
+          1
+        ],
+        [
+          0,
+          18,
+          0
+        ],
+        [
+          1,
+          0,
+          25
+        ]
+      ]
+    },
+    "unsafe_execution_rate": 0.038461538461538464,
+    "false_intervention_rate": 0.038461538461538464,
+    "autonomy_coverage": 0.37142857142857144,
+    "severity_weighted_error": 0.18571428571428572
+  }
+}
