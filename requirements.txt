@@ -1,4 +1,0 @@
-pydantic
-scikit-learn
-xgboost 
-
