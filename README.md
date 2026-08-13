@@ -1,5 +1,7 @@
 <div align="center">
+
 # ARGUS: A Lightweight Reliability Governor for Tool-Using AI Agents (MVP)
+
 </div>
 
 ---
