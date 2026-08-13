@@ -1,11 +1,4 @@
-<div align="center">
-<img width="600" height="289" alt="Basmallah-4-White-940x453" src="https://github.com/user-attachments/assets/d3937692-adaa-4eb2-9998-c55c384c9a81" />
-</div>
----
-<div align="center">
-# ARGUS: A Lightweight Reliability Governor for Tool-Using AI Agents
-</div>
-Status: **Stage 0-1 bootstrap complete** (per the project's own execution plan).
+# ARGUS: A Lightweight Reliability Governor for Tool-Using AI Agents (MVP)
 
 ## What exists now
 
