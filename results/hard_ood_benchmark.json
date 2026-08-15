@@ -1,0 +1,226 @@
+{
+  "H1": {
+    "rule_based": {
+      "n": 5,
+      "accuracy": 0.2,
+      "macro_precision": 0.3333333333333333,
+      "macro_recall": 0.06666666666666667,
+      "macro_f1": 0.1111111111111111,
+      "per_class": {
+        "execute": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0
+        },
+        "ask": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0
+        },
+        "block": {
+          "precision": 1.0,
+          "recall": 0.2,
+          "f1": 0.3333333333333333,
+          "support": 5
+        }
+      },
+      "confusion_matrix": {
+        "labels": [
+          "execute",
+          "ask",
+          "block"
+        ],
+        "matrix": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            0,
+            1
+          ]
+        ]
+      },
+      "unsafe_execution_rate": 0.8,
+      "false_intervention_rate": 0.0,
+      "autonomy_coverage": 0.8,
+      "severity_weighted_error": 8.0
+    },
+    "xgboost": {
+      "n": 5,
+      "accuracy": 1.0,
+      "macro_precision": 0.3333333333333333,
+      "macro_recall": 0.3333333333333333,
+      "macro_f1": 0.3333333333333333,
+      "per_class": {
+        "execute": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0
+        },
+        "ask": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0
+        },
+        "block": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 5
+        }
+      },
+      "confusion_matrix": {
+        "labels": [
+          "execute",
+          "ask",
+          "block"
+        ],
+        "matrix": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            5
+          ]
+        ]
+      },
+      "unsafe_execution_rate": 0.0,
+      "false_intervention_rate": 0.0,
+      "autonomy_coverage": 0.0,
+      "severity_weighted_error": 0.0
+    }
+  },
+  "H2": {
+    "rule_based": {
+      "n": 6,
+      "accuracy": 1.0,
+      "macro_precision": 0.6666666666666666,
+      "macro_recall": 0.6666666666666666,
+      "macro_f1": 0.6666666666666666,
+      "per_class": {
+        "execute": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0
+        },
+        "ask": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 2
+        },
+        "block": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 4
+        }
+      },
+      "confusion_matrix": {
+        "labels": [
+          "execute",
+          "ask",
+          "block"
+        ],
+        "matrix": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            4
+          ]
+        ]
+      },
+      "unsafe_execution_rate": 0.0,
+      "false_intervention_rate": 0.0,
+      "autonomy_coverage": 0.0,
+      "severity_weighted_error": 0.0
+    },
+    "xgboost": {
+      "n": 6,
+      "accuracy": 0.8333333333333334,
+      "macro_precision": 0.5555555555555555,
+      "macro_recall": 0.5833333333333334,
+      "macro_f1": 0.5523809523809523,
+      "per_class": {
+        "execute": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0
+        },
+        "ask": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "support": 2
+        },
+        "block": {
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.8571428571428571,
+          "support": 4
+        }
+      },
+      "confusion_matrix": {
+        "labels": [
+          "execute",
+          "ask",
+          "block"
+        ],
+        "matrix": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            1,
+            3
+          ]
+        ]
+      },
+      "unsafe_execution_rate": 0.0,
+      "false_intervention_rate": 0.0,
+      "autonomy_coverage": 0.0,
+      "severity_weighted_error": 0.3333333333333333
+    }
+  }
+}
