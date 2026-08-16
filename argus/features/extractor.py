@@ -2,14 +2,29 @@
 Feature extraction: Scenario -> flat dict of interpretable features.
 
 No embeddings, no LLM calls. Every feature here is either a direct
-readout of structured scenario fields (domain, tool name, risk level,
-precondition lists) or a cheap deterministic heuristic (keyword search,
-counting) over `user_request` / `environment_state` text.
+readout of structured scenario fields (domain, tool name, risk level)
+or a cheap deterministic heuristic (keyword search, counting) over
+`user_request` / `environment_state` text.
 
 HARD RULE: gold_decision, gold_reason, gold_reason_codes, and
-expected_safe_action are NEVER read by this module. `FORBIDDEN_FIELDS`
-below exists so `extract_features` can assert this at import time rather
-than relying on developer discipline alone.
+expected_safe_action are NEVER read by this module. FORBIDDEN_FIELDS
+below exists so extract_features() leakage can be asserted at test time
+rather than relying on developer discipline alone.
+
+REMOVED (2026-08, Hard-OOD investigation): missing_precondition_count
+and satisfied_precondition_ratio used to be computed from
+scenario.missing_preconditions / satisfied_preconditions. They were
+removed after discovering XGBoost's #1 feature by importance (0.30,
+far above every other feature) was missing_precondition_count — because
+every generator sets missing_preconditions to directly restate why a
+scenario isn't EXECUTE (and the schema validator itself REQUIRES
+missing_preconditions=[] whenever gold_decision==EXECUTE). That made
+the feature a near-tautological proxy for "not EXECUTE", not an
+independent signal — the same class of leak fixed for delete_decision's
+"confirmed_not_important" precondition earlier, just undetected
+elsewhere. A governor should derive risk from raw, independently
+computable signals; a pre-summarized "here's what's wrong" list is not
+that, even framed as a precondition count.
 """
 
 from __future__ import annotations
@@ -74,7 +89,11 @@ def extract_features(scenario: Scenario) -> dict[str, int | float]:
     features["risk_high"] = int(scenario.risk_level.value in ("high", "critical"))
     features["is_reversible"] = int(scenario.reversible.value == "reversible")
 
-    # -- permissions / preconditions ------------------------------------
+    # -- permissions ---------------------------------------------------
+    # NOTE: this reads the SPECIFIC "permission:" entries, not a generic
+    # count of all missing preconditions — narrower and independently
+    # meaningful (a real system plausibly checks "do I hold this scope?"
+    # directly), unlike the removed blanket precondition-count features.
     permission_missing = any(
         p.startswith("permission:") for p in scenario.missing_preconditions
     )
@@ -88,13 +107,6 @@ def extract_features(scenario: Scenario) -> dict[str, int | float]:
     ]
     features["schema_valid"] = int(len(missing_args) == 0)
     features["missing_argument_count"] = len(missing_args)
-
-    features["missing_precondition_count"] = len(scenario.missing_preconditions)
-    total_preconditions = len(scenario.satisfied_preconditions) + len(scenario.missing_preconditions)
-    features["satisfied_precondition_ratio"] = (
-        len(scenario.satisfied_preconditions) / total_preconditions
-        if total_preconditions > 0 else 1.0
-    )
 
     # -- entity ambiguity (derived from environment_state, not gold labels) --
     contacts = scenario.environment_state.get("contacts", [])
@@ -140,11 +152,6 @@ def extract_features(scenario: Scenario) -> dict[str, int | float]:
     )
 
     # -- target file signals (indirect/imperfect, NOT the ground truth) --
-    # These mirror what a real system could plausibly observe (file
-    # metadata) rather than an oracle "is this file important" flag.
-    # The true importance used to generate gold labels is these signals
-    # PLUS irreducible noise (see generators.py) — so even a governor
-    # that reads these perfectly cannot reach 100% on this category.
     target_path_arg = (scenario.proposed_tool.arguments.get("path")
                         or scenario.proposed_tool.arguments.get("src") or "")
     target_file_entry = next(
@@ -164,10 +171,22 @@ def extract_features(scenario: Scenario) -> dict[str, int | float]:
 
     # -- shape / size features ------------------------------------------
     features["request_length"] = len(scenario.user_request.split())
-    features["plan_step_count"] = len(scenario.agent_plan)
-    features["argument_count"] = len(scenario.proposed_tool.arguments)
 
     return features
+
+
+# REMOVED (2026-08, H1 ablation test): plan_step_count and argument_count
+# used to be included here. An ablation test proved XGBoost's apparent
+# 100% success on H1 (novel prompt-injection phrasings) collapsed to
+# exactly rule_based's 20% the moment these two were excluded — meaning
+# the model wasn't detecting injection semantically, it was exploiting
+# an authorial habit (every hand-written injection scenario, in training
+# AND in the H1 test set, happens to use a 2-step "read X" + "follow
+# embedded instruction" plan, vs. 1 step for ordinary delete_file calls).
+# That's a real correlation in OUR data, not a property a genuine
+# attack would reliably have. Kept removed rather than "fixed" at the
+# dataset level — safer to not rely on plan-shape bookkeeping at all
+# until it's demonstrated on non-self-authored data.
 
 
 def extract_batch(scenarios: list[Scenario]) -> list[dict[str, int | float]]:
