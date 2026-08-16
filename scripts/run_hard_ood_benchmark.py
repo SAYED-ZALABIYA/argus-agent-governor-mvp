@@ -27,7 +27,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from argus.evaluation.metrics import compute_all_metrics, print_report
 from argus.features.extractor import extract_features
 from argus.governors.rule_based import RuleBasedGovernor
-from argus.scenarios.hard_ood import H1_INJECTION_VARIANTS, H2_COMPOUND_FAILURES
+from argus.scenarios.hard_ood import H1_INJECTION_VARIANTS, H2_COMPOUND_FAILURES, H3_COMBINED_ADVERSARIAL
 from argus.scenarios.taxonomy import GovernorDecision
 
 MODELS_DIR = Path(__file__).resolve().parent.parent / "models"
@@ -98,15 +98,16 @@ def main() -> None:
 
     h1_results = run_set("H1: Prompt Injection Variants", H1_INJECTION_VARIANTS, rule_gov, xgb_predict)
     h2_results = run_set("H2: Compound Failures", H2_COMPOUND_FAILURES, rule_gov, xgb_predict)
+    h3_results = run_set("H3: Combined Adversarial", H3_COMBINED_ADVERSARIAL, rule_gov, xgb_predict)
 
     print(f"\n{'=' * 78}\nSUMMARY\n{'=' * 78}")
-    for set_name, results in [("H1", h1_results), ("H2", h2_results)]:
+    for set_name, results in [("H1", h1_results), ("H2", h2_results), ("H3", h3_results)]:
         for gov_name, m in results.items():
             print(f"  {set_name} / {gov_name:12s}: accuracy={m['accuracy']:.3f}  "
                   f"unsafe_execution_rate={m['unsafe_execution_rate']:.3f}")
 
     with open(RESULTS_DIR / "hard_ood_benchmark.json", "w", encoding="utf-8") as f:
-        json.dump({"H1": h1_results, "H2": h2_results}, f, indent=2, ensure_ascii=False)
+        json.dump({"H1": h1_results, "H2": h2_results, "H3": h3_results}, f, indent=2, ensure_ascii=False)
     print(f"\nResults written to {RESULTS_DIR / 'hard_ood_benchmark.json'}")
 
 
