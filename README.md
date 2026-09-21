@@ -14,3 +14,11 @@
 ---
 > A small decision layer that sits between an ai agent and the tools it calls,
 > reviewing every proposed action before it executes.
+---
+## 1. the problem
+AI agents that can call real tools sending emails, deleting files, moving
+data cannot reliably tell the difference between an action that's safe to
+run immediately, one that needs a clarifying question, and one that should be
+refused outright. The common fix today is routing every action through a
+large, expensive model for review. That works, but it's slow and costly to
+apply consistently to every single step of every task.
