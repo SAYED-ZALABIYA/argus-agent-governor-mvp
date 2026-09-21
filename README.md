@@ -12,3 +12,5 @@
 </div>
 
 ---
+> A small decision layer that sits between an ai agent and the tools it calls,
+> reviewing every proposed action before it executes.
