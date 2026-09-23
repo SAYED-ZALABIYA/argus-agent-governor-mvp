@@ -22,6 +22,7 @@ run immediately, one that needs a clarifying question, and one that should be
 refused outright. The common fix today is routing every action through a
 large, expensive model for review. That works, but it's slow and costly to
 apply consistently to every single step of every task.
+
 --- 
 ## 2. the idea 
 ARGUS is not a new agent. It's a governor placed between an existing agent and its tools.
