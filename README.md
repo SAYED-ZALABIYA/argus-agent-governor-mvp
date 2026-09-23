@@ -37,3 +37,20 @@ BLOCK     — unsafe, unauthorized, or the result of manipulated input
 ```
 
 The mvp scope deliberately restricts to `EXECUTE` / `ASK` / `BLOCK`, two domains (email, file), and a fixed set of tools (`send_email`, `create_draft`, `delete_email`, `read_file`, `move_file`, `delete_file`). `VERIFY` and broader scope were designed for from day one (see `argus/scenarios/taxonomy.py`) but intentionally deferred. 
+
+---
+## 3. architecture 
+
+```
+User request
+     ↓
+Agent (proposes a tool call)
+     ↓
+Feature Extractor (29 interpretable signals — no embeddings, no LLM)
+     ↓
+Governor (rule-based / logistic regression / XGBoost)
+     ↓
+EXECUTE → real sandboxed execution
+ASK     → clarifying question, nothing executes
+BLOCK   → refused, nothing executes
+```
