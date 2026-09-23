@@ -41,21 +41,6 @@ The mvp scope deliberately restricts to `EXECUTE` / `ASK` / `BLOCK`, two domains
 ---
 ## 3. architecture 
 
-```
-User request
-     ↓
-Agent (proposes a tool call)
-     ↓
-Feature Extractor (29 interpretable signals — no embeddings, no LLM)
-     ↓
-Governor (rule-based / logistic regression / XGBoost)
-     ↓
-EXECUTE → real sandboxed execution
-ASK     → clarifying question, nothing executes
-BLOCK   → refused, nothing executes
-```
 <div align="center">
-
 <img width="1439" height="811" alt="Screenshot 2026-09-23 150210" src="https://github.com/user-attachments/assets/bd44898f-45dc-4b64-b359-3e6e0d952061" />
-
 </div>
