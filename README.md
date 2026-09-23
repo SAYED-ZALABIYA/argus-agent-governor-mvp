@@ -54,3 +54,8 @@ EXECUTE → real sandboxed execution
 ASK     → clarifying question, nothing executes
 BLOCK   → refused, nothing executes
 ```
+<div align="center">
+
+<img width="1439" height="811" alt="Screenshot 2026-09-23 150210" src="https://github.com/user-attachments/assets/bd44898f-45dc-4b64-b359-3e6e0d952061" />
+
+</div>
